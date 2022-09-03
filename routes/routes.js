@@ -8,17 +8,20 @@ router.get("/", async function (req, res) {
     message: "Here are your tasks",
   });
 });
-var reqData;
+
 router.post("/quote", async function (req, res) {
-  reqData = req.body;
-  const quote = await ageQuote(reqData);
-  // const breed = await breedCalculator(quote);
+  let reqData = req.body;
+  let quote = await ageQuote(reqData);
+  console.log(`quote ${quote}`)
+  let breed = await breedCalculator(reqData,quote);
+  console.log(`breed ${breed}`)
+  let postcode = await postcodeCalculator(reqData, breed);
+  console.log(`postcode ${postcode}`)
   res.json({ success: true, payload: quote });
 });
 
 async function ageQuote(reqData) {
   if (reqData.pet.age === 1) {
-    console.log("IT'S A ONE!");
     return reqData.baseprice * 1.05;
   }
   if (reqData.pet.age === 2) {
@@ -47,22 +50,39 @@ async function ageQuote(reqData) {
   } else {
     return reqData.baseprice * 1.75;
   }
-
-  // async function breedCalculator(quote) {
-  //   // console.log(ageQuote)
-  //   if (
-  //     reqData.pet.breed === "Husky" ||
-  //     reqData.pet.breed === "Husky".toLowerCase() ||
-  //     reqData.pet.breed === "Labrador" ||
-  //     reqData.pet.breed === "Labrador".toLowerCase() ||
-  //     reqData.pet.breed === "German Shepherd" ||
-  //     reqData.pet.breed === "German Shepherd".toLowerCase()
-  //   ) {
-  //     let breedDiscount = ageQuote * 0.9;
-  //     return breedDiscount;
-  //   }
-  // }
 }
+ 
+  async function breedCalculator(reqData,quote) {
+    
+    if (
+      reqData.pet.breed.toLowerCase() === "husky" ||
+      reqData.pet.breed.toLowerCase() === "labrador" ||
+      reqData.pet.breed.toLowerCase() === "german shepherd" 
+      ) {
+        let breedDiscount = quote * 0.9;
+        // console.log(`breedDiscount ${breedDiscount}`)
+        return breedDiscount
+      } else {
+        // console.log(`breed line 65 ${reqData.pet.breed}`)
+        return quote;
+      }
+  }
+
+  async function postcodeCalculator(reqData, breed) {
+    if (
+      reqData.postcode.toLowerCase().includes("bs4") ||
+      reqData.postcode.toLowerCase().includes("sw3") ||
+      reqData.postcode.toLowerCase().includes("m12") 
+    ) {
+      let postcodeIncrease = breed * 1.15
+      // console.log(`postcodeIncrease ${postcodeIncrease}`)
+      return postcodeIncrease
+    } else {
+      // console.log(`postcode line 83${reqData.postcode}`)
+      return breed;
+    }
+  }
+// }
 // let increase5 = reqData.pet.age * 0.05;
 // let less5AgeQuote = reqData.baseprice + (reqData.baseprice * increase5);
 //     return less5AgeQuote
