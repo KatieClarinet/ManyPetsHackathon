@@ -12,29 +12,37 @@ router.get("/", async function (req, res) {
 
 router.post("/quote", async function (req, res) {
     let reqData = req.body;
-    //pet1
-    let quote = await ageQuote(reqData, index);
-    let breed = await breedCalculator(reqData, quote, index);
-    let postcode = await postcodeCalculator(reqData, breed);
-    let multiPets = await checkMultiPets(reqData, index);
-    //pet2
-    let quote1 = await ageQuote(reqData, index);
-    let breed1 = await breedCalculator(reqData, quote, index);
-    //pet3
-    let quote2 = await ageQuote(reqData, index);
-    let breed2 = await breedCalculator(reqData, quote, index);
-    console.log(`multipets ${multiPets}`);
+    let quote = await ageQuote(reqData, index)
+    let breedQuote = await breedCalculator(reqData, quote, index)
+    let quote2
+    let breedQuote2
+     if (reqData.pets.length > index) {
+      console.log ("many pets")
+      index = index+1
+      quote2 = await ageQuote(reqData, index)
+      breedQuote2 = await breedCalculator(reqData, quote2, index)
+      }
+
+   
+    // console.log(`multipets ${multiPets}`);
     res.json({
         success: true,
         Pet1: {
-            AgeBasedQuote: quote,
-            IncBreedDiscount: breed,
-            IncPostcodeCost: postcode,
+          ageQuote: quote,
+          breedQuote: breedQuote
         },
-        Pet2: { AgeBasedQuote: quote1, IncBreedDiscount: breed1 },
-        Pet3: { AgeBasedQuote: quote2, IncBreedDiscount: breed2 },
+        Pet2: {
+          ageQuote: quote2,
+          breedQuote: breedQuote2
+        },
     });
 });
+
+
+
+
+  
+ 
 
 async function ageQuote(reqData, index) {
     console.log(`ageQuote line 40 index: ${index}`);
@@ -102,15 +110,15 @@ async function postcodeCalculator(reqData, breed) {
 //but if not...stop
 //if reqData.pets[index++] != null then loop back over?
 //check if the reqData array contains another index?
-async function checkMultiPets(reqData, index) {
-    console.log(`checkMultiPets line 106 Pets array length: ${reqData.pets.length}`);
-    if (reqData.pets.length > index) {
-        index = index + 1;
-        console.log(`index line 109 ${index}`);
-        ageQuote(reqData, index);
-    } else {
-        console.log(`number of pets = ${index} -1`);
-    }
-}
+// async function checkMultiPets(reqData, index) {
+//     console.log(`checkMultiPets line 106 Pets array length: ${reqData.pets.length}`);
+//     if (reqData.pets.length > index) {
+//         index = index + 1;
+//         console.log(`index line 109 ${index}`);
+//         ageQuote(reqData, index);
+//     } else {
+//         console.log(`number of pets = ${index} -1`);
+//     }
+// }
 
 export default router;
