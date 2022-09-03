@@ -17,7 +17,7 @@ router.post("/quote", async function (req, res) {
   console.log(`breed ${breed}`)
   let postcode = await postcodeCalculator(reqData, breed);
   console.log(`postcode ${postcode}`)
-  res.json({ success: true, payload: quote });
+  res.json({ success: true, AgeBasedQuote: quote, IncBreedDiscount: breed, IncPostcodeCost: postcode });
 });
 
 async function ageQuote(reqData) {

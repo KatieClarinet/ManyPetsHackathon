@@ -1,6 +1,8 @@
 # MANY PETS HACKATHON PLAN
 
-VISUALISE OBJECT
+1 PET OBJECT STRUCTURE
+  
+```
 {
     "postcode":" WV5 4hh",
     "baseprice":10,
@@ -8,8 +10,28 @@ VISUALISE OBJECT
 "type": "dog",
 "age": 1,
 "breed": "husky"
+    }
 }
+```    
+MULTI PET OBJECT STRUCTURE
+
+```
+{
+    "postcode":" WV5 4hh",
+    "baseprice":10,
+    "pets": {
+"type": "dog",
+"age": 1,
+"breed": "husky"
+    },
+    {
+"type": "cat",
+"age": 5,
+"breed": "ginger"
+    }
 }
+``` 
+
 base price £10 a month/£120 year
 
 ### CALCULATE QUOTE (DONE)  
