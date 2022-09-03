@@ -54,6 +54,7 @@ async function ageQuote(reqData) {
  
   async function breedCalculator(reqData,quote) {
     
+    //SEND FETCH REQ here to check breed 
     if (
       reqData.pet.breed.toLowerCase() === "husky" ||
       reqData.pet.breed.toLowerCase() === "labrador" ||
