@@ -240,13 +240,13 @@ router.post("/quote", async function (req, res) {
         }
     }
 }
-
+//remember to round these numbers up 
     res.json({
         success: true,
-        Quote: totalPrice,
-        Postcode15: await postcodeInc(totalPrice),
-        MultiPet10: await multiPetDiscount(totalPrice, priceIncrease, totalPets),
-        Number_of_pets: totalPets,
+        "Number of pets": totalPets,
+        "Quote (inc age and breed)": totalPrice,
+        "Postcode extra 15": await postcodeInc(totalPrice),
+        "Final Price": await multiPetDiscount(totalPrice, priceIncrease, totalPets),
     });
 });
 
